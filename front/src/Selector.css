@@ -1,0 +1,8 @@
+.infos {
+    white-space: pre-line;
+}
+
+.widget {
+    color: gray;
+    border-style: dashed;
+}

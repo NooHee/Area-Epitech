@@ -1,0 +1,21 @@
+.cocktail {
+    max-height: 400px;
+    max-width: 400px;
+    padding-left: 15%;
+    padding-right: 50px;
+    padding-bottom: 50px;
+}
+
+ul {
+    font-size: xx-large;
+}
+
+.info {
+    display: flex;
+    padding-top: 50px;
+}
+
+.ingredient {
+    list-style-image: url("https://contribute.geeksforgeeks.org/wp-content/uploads/listitem-1.png");
+    font-size: x-large;
+}

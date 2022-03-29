@@ -1,0 +1,659 @@
+swagger: "2.0"
+info:
+  description: "This is the api documentation and endpoints of the YEP Area"
+  version: "1.0.0"
+  title: "Area"
+  license:
+    name: "Node 16.13.2"
+host: "localhost:8081"
+tags:
+- name: "Services"
+  description: "Everything about Services"
+- name: "Actions"
+  description: "Everything about Actions"
+- name: "Reactions"
+  description: "Everything about Reactions"
+- name: "Time"
+  description: "Action of Time"
+- name: "Spotify"
+  description: "Action of Spotify"
+- name: "Reddit"
+  description: "Action of Reddit"
+- name: "Cocktail"
+  description: "Action of Cocktail"
+- name: "Twitch"
+  description: "Action of Twitch"
+
+schemes:
+- "http"
+paths:
+  /services/actions:
+    get:
+      tags:
+      - "Services"
+      summary: "List all action services"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: 'OK'
+          schema:
+              type: "array"
+              items:
+                $ref: "#/definitions/ServicesAction"
+              
+                
+  /services/reactions:
+    get:
+      tags:
+      - "Services"
+      summary: "List all reaction services"
+      description: ""
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ServicesReaction"
+
+  /actions/time:
+    get:
+      tags:
+      - "Actions"
+      summary: "List all Time actions"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/TimeAction"
+  
+  /actions/twitch:
+    get:
+      tags:
+      - "Actions"
+      summary: "List all Twitch actions"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/TwitchAction"
+              
+  /actions/weather:
+    get:
+      tags:
+      - "Actions"
+      summary: "List all Weather actions"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/WeatherAction"
+  
+  /actions/discord:
+    get:
+      tags:
+      - "Actions"
+      summary: "List all Discord actions"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/DiscordAction"
+    
+  /actions/spotify:
+    get:
+      tags:
+      - "Actions"
+      summary: "List all Spotify Actions"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/SpotifyAction"
+    
+  /actions/reddit:
+    get:
+      tags:
+      - "Actions"
+      summary: "List all Reddit Actions"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/RedditAction"
+  
+  
+  /reactions/discord:
+    get:
+      tags:
+      - "Reactions"
+      summary: "List all Discord reactions"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/DiscordReaction"
+  
+  /reactions/cocktail:
+    get:
+      tags:
+      - "Reactions"
+      summary: "List all Cocktail reactions"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/CocktailReaction"
+  
+              
+              
+  / T0:
+    get:
+      tags:
+      - "Time"
+      summary: "On time"
+      description: "Trigger whenever the actual time is on time (_:00)"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Time reached 0 min past the hour {result: 'OK'}"
+        "200 ":
+          description: "Time did not reached 0 min past the hour KO {result: 'KO', error: 'error_msg'}"
+  
+  / T1:
+    get:
+      tags:
+      - "Time"
+      summary: "Half time"
+      description: "Trigger whenever the actual time reach half an hour (_:30)"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Time reached 30 min past the hour {result: 'OK'}"
+        "200 ":
+          description: "Time did not reached 30 min past the hour KO {result: 'KO', error: 'error_msg'}"
+  
+  / W0:
+    get:
+      tags:
+      - "Weather"
+      summary: "Temperature higher than 20°C"
+      description: "Trigger whenever the temperature of the city is higher than 20°C"
+      parameters:
+      - name: "City"
+        in: 'name'
+        description: "City name to collect the temperature from"
+        required: true
+        type: "string"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Temperature is higher than 20°C {result: 'OK', temp: actual_temperature}"
+        "200 ":
+          description: "Temperature is lower than 20°C {result: 'KO', error: 'error_msg'}"
+        "400":
+          description: "Missing city argument {result: 'KO', error: 'error_msg'}"
+        "404":
+          description: "No matching city {result: 'KO', error: 'error_msg'}"
+          
+  / S0:
+    get:
+      tags:
+      - "Spotify"
+      summary: "Artist is popular"
+      description: "Trigger whenever an artist is more popular than 80%"
+      parameters:
+      - name: "Artist"
+        in: 'name'
+        description: "artist name to check the popularity"
+        required: true
+        type: "string"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Artist is more popular than 80% {result: 'OK', popularity: popularity}"
+        "200 ":
+          description: "Artist is less popular than 80% {result: 'KO', error: 'error_msg'}"
+        "400":
+          description: "Missing artist argument {result: 'KO', error: 'error_msg'}"
+        "404":
+          description: "No matching artist {result: 'KO', error: 'error_msg'}"
+          
+          
+  / S1:
+    get:
+      tags:
+      - "Spotify"
+      summary: "Number of Followers"
+      description: "Trigger whenever an artist have more followers than 50000"
+      parameters:
+      - name: "Artist"
+        in: 'name'
+        description: "artist name to check the number of followers"
+        required: true
+        type: "string"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Artist has more than 50k followers {result: 'OK', followers: followers}"
+        "200 ":
+          description: "Artist has less than 50k followers {result: 'KO', error: 'error_msg'}"
+        "400":
+          description: "Missing artist argument {result: 'KO', error: 'error_msg'}"
+        "404":
+          description: "No matching artist {result: 'KO', error: 'error_msg'}"
+  
+  / TW0:
+    get:
+      tags:
+      - "Twitch"
+      summary: "Is live"
+      description: "Trigger whenever an streamer is live"
+      parameters:
+      - name: "Streamer name"
+        in: 'name'
+        description: "Streamer name to check live status"
+        required: true
+        type: "string"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Streamer is live {result: 'OK', followers: followers}"
+        "200 ":
+          description: "Streamer is not live {result: 'KO', error: 'error_msg'}"
+        "400":
+          description: "Missing streamer name argument {result: 'KO', error: 'error_msg'}"
+        "404":
+          description: "No matching streamer {result: 'KO', error: 'error_msg'}"
+  
+  / TW1:
+    get:
+      tags:
+      - "Twitch"
+      summary: "Stream longer than 1H"
+      description: "Trigger whenever an streamer has streamed for more than 1H"
+      parameters:
+      - name: "Streamer name"
+        in: 'name'
+        description: "Streamer name to check live status"
+        required: true
+        type: "string"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Stream is longer than 1H {result: 'OK', followers: followers}"
+        "200 ":
+          description: "Streamer is shorter than 1H {result: 'KO', error: 'error_msg'}"
+        "400":
+          description: "Missing streamer name argument {result: 'KO', error: 'error_msg'}"
+        "404":
+          description: "No matching streamer {result: 'KO', error: 'error_msg'}"
+  
+  / TW2:
+    get:
+      tags:
+      - "Twitch"
+      summary: "Top 100"
+      description: "Trigger whenever the top 100 streamers of a game have more than 50K viewers combined"
+      parameters:
+      - name: "game name"
+        in: 'name'
+        description: "Game name to check"
+        required: true
+        type: "string"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Game has more than 50K viewers {result: 'OK', followers: followers}"
+        "200 ":
+          description: "Game has less than 50K viewers {result: 'KO', error: 'error_msg'}"
+        "400":
+          description: "Missing game name argument {result: 'KO', error: 'error_msg'}"
+        "404":
+          description: "No matching game {result: 'KO', error: 'error_msg'}"
+
+
+
+
+  / R0:
+    get:
+      tags:
+      - "Reddit"
+      summary: "Number of subreddit"
+      description: "Trigger whenever if you are reggister to more then 10 subreddits"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "User has more than 10 subreddits {result: 'OK', nb: nb}"
+        "200 ":
+          description: "Artist has less than 10 subreddits {result: 'KO', error: 'error_msg'}"
+        "404":
+          description: "No subreddits subscribed {result: 'KO', error: 'error_msg'}"
+  
+  / D0:
+    get:
+      tags:
+      - "Discord"
+      summary: "Write a message"
+      description: "Create a message on a specific channel"
+      parameters:
+      - name: "channel name"
+        in: 'name'
+        description: "channel name to send the message to"
+        required: true
+        type: "string"
+      - name: "message"
+        in: 'name'
+        description: "message to send"
+        required: true
+        type: "string"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Message sent {result: 'OK', id: channel_id, name: channel_name}"
+        "400":
+          description: "Missing channel name argument {result: 'KO', error: 'error_msg'}"
+        "400 ":
+          description: "Missing message argument {result: 'KO', error: 'error_msg'}"
+        "404":
+          description: "Unknown channel {result: 'KO', error: 'error_msg'}"
+          
+  / D1:
+    get:
+      tags:
+      - "Discord"
+      summary: "Write a message for all channel"
+      description: "Create a message on a specific channel on every server where the bot was invited"
+      parameters:
+      - name: "channel name"
+        in: 'name'
+        description: "channel name to send the message to"
+        required: true
+        type: "string"
+      - name: "message"
+        in: 'name'
+        description: "message to send"
+        required: true
+        type: "string"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Message sent {result: 'OK'}"
+        "400":
+          description: "Missing channel name argument {result: 'KO', error: 'error_msg'}"
+        "400 ":
+          description: "Missing message argument {result: 'KO', error: 'error_msg'}"
+        "404":
+          description: "Unknown channel {result: 'KO', error: 'error_msg'}"
+  
+  / D2:
+    get:
+      tags:
+      - "Discord"
+      summary: "Create a channel"
+      description: "Create a channel on a specific server"
+      parameters:
+      - name: "server name"
+        in: 'name'
+        description: "server name to send the message to"
+        required: true
+        type: "string"
+      - name: "channel name"
+        in: 'name'
+        description: "channel name to create"
+        required: true
+        type: "string"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Server created {result: 'OK'}"
+        "400":
+          description: "Missing server name argument {result: 'KO', error: 'error_msg'}"
+        "400 ":
+          description: "Missing channel name argument {result: 'KO', error: 'error_msg'}"
+        "404":
+          description: "Unknown server {result: 'KO', error: 'error_msg'}"
+  
+  / D3:
+    get:
+      tags:
+      - "Discord"
+      summary: "Send private message"
+      description: "Send a private message to a specific user"
+      parameters:
+      - name: "User name"
+        in: 'name'
+        description: "user name to send the message to"
+        required: true
+        type: "string"
+      - name: "message"
+        in: 'name'
+        description: "message to send"
+        required: true
+        type: "string"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "PM sent {result: 'OK'}"
+        "400":
+          description: "Missing user name argument {result: 'KO', error: 'error_msg'}"
+        "400 ":
+          description: "Missing message argument {result: 'KO', error: 'error_msg'}"
+        "404":
+          description: "Unknown User {result: 'KO', error: 'error_msg'}"
+          
+          
+          
+          
+  / C0:
+    get:
+      tags:
+      - "Cocktail"
+      summary: "Cocktail with alcohol"
+      description: "Create a window with a suggested cocktail based on the chosen ingredient with alcohol"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Cocktail given {result: 'OK', cocktail: cocktail}"
+        "200 ":
+          description: "Ingredient not valid {result: 'KO', error: 'error_msg'}"
+        "400":
+          description: "Missing ingredient argument {result: 'KO', error: 'error_msg'}"
+        "404":
+          description: "No cocktail matching the ingredient {result: 'KO', error: 'error_msg'}"
+          
+  / C1:
+    get:
+      tags:
+      - "Cocktail"
+      summary: "Cocktail without alcohol"
+      description: "Create a window with a suggested cocktail based on the chosen ingredient without alcohol"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Cocktail given {result: 'OK', cocktail: cocktail}"
+        "200 ":
+          description: "Ingredient not valid {result: 'KO', error: 'error_msg'}"
+        "400":
+          description: "Missing ingredient argument {result: 'KO', error: 'error_msg'}"
+        "404":
+          description: "No cocktail matching the ingredient {result: 'KO', error: 'error_msg'}"
+          
+definitions:
+  ServicesAction:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        example: Time
+      label:
+        type: "string"
+        example: time
+
+  ServicesReaction:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        example: Discord
+      label:
+        type: "string"
+        example: discord
+
+  TimeAction:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        example: T0
+      name:
+        type: "string"
+        example: Time reaching 0 mins
+      description:
+        type: "string"
+        example: "Trigger whenever the actual time is on time (_:00)"
+  
+  TwitchAction:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        example: TW0
+      name:
+        type: "string"
+        example: Is Live
+      description:
+        type: "string"
+        example: "Trigger whenever a streamer is streaming"
+        
+  WeatherAction:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        example: W0
+      name:
+        type: "string"
+        example: Temperature higher than 20°C
+      description:
+        type: "string"
+        example: "Trigger whenever the temperature of the city is higher than 20°C"
+  
+  DiscordAction:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        example: D0
+      name:
+        type: "string"
+        example: Write a message
+      description:
+        type: "string"
+        example: "Create a message on a specific channel"
+  
+  SpotifyAction:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        example: S0
+      name:
+        type: "string"
+        example: Is popular
+      description:
+        type: "string"
+        example: "Trugger whenever an artist is more popular than 80%"
+        
+  RedditAction:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        example: R0
+      name:
+        type: "string"
+        example: Number of subreddit
+      description:
+        type: "string"
+        example: "Trigger if you are subbed to more then 10 subreddits"
+
+  DiscordReaction:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        example: D0
+      name:
+        type: "string"
+        example: Write a message
+      description:
+        type: "string"
+        example: "Create a message on a specific channel"
+  
+  CocktailReaction:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        example: C0
+      name:
+        type: "string"
+        example: Cocktail with alcohol
+      description:
+        type: "string"
+        example: "Create a window with a suggested cocktail based on the chosen ingredient with alcohol"
+    

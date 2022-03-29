@@ -1,0 +1,32 @@
+version: '3'
+services:
+  client_mobile:
+    image: area_mobile
+    build: ./mobile
+    depends_on:
+      - server
+    volumes:
+      - ./mobile/APK:/APK
+
+  client_web:
+    image: area_web
+    build: ./front
+    stdin_open: true
+
+    ports:
+      - 8080:8080
+    environment:
+      - PORT=8080
+    volumes:
+      - ./mobile/APK:/APK
+
+  server:
+    image: area_api
+    build: ./api
+    stdin_open: true
+    volumes:
+      - ./mobile/APK:/APK
+    ports:
+      - 8081:8081
+    environment:
+      - PORT=8081
