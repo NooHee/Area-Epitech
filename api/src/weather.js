@@ -12,16 +12,10 @@ module.exports = function (app) {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
-        //5f4a29ea12a82edf0c05c286e3055f41
-        //http://api.openweathermap.org/data/2.5/weather?q=${req.query.city}&units=metric&appid=5f4a29ea12a82edf0c05c286e3055f41
-        
-        /* if (req.query.key == undefined || req.query.key == '') {
-            return res.status(401).json({ result: 'KO', error: 'Wrong or empty api key' });
-        } */
         if (req.query.city == undefined || req.query.city == '') {
             return res.status(400).json({ result: 'KO', error: 'empty city name' });
         }
-        fetch(`http://api.openweathermap.org/data/2.5/weather?q=${req.query.city}&units=metric&appid=5f4a29ea12a82edf0c05c286e3055f41`).then((response) => response.json())
+        fetch(`http://api.openweathermap.org/data/2.5/weather?q=${req.query.city}&units=metric&appid=`).then((response) => response.json())
             .then((data) => {
                 if (data.error) {
                     console.log(data.error)
